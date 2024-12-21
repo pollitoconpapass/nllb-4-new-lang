@@ -1,0 +1,11 @@
+# Finetuning nllb model for translating a new language
+
+This repo contains the notebook training and the implementation of a fine-tuned model of [facebook/nllb-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M) to handle Cuzco Quechua, a new language.
+
+All of this process is inspired by this [Medium Article](https://cointegrated.medium.com/how-to-fine-tune-a-nllb-200-model-for-translating-a-new-language-a37fc706b865) by David Dale.
+
+
+## Project Structure
+- `notebooks` : Where the Jupyter Notebook with the finetuning process is located
+- `app.py` : The testing of the model after uploadind it to Hugging Face
+- `endpoint.py` : Converting the process to an API using FastAPI
