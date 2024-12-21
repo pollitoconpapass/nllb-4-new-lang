@@ -6,7 +6,7 @@ from transformers import NllbTokenizer, AutoModelForSeq2SeqLM
 
 app = FastAPI()
 
-def fix_tokenizer(tokenizer, new_lang='quz_Latn'):
+def fix_tokenizer(tokenizer, new_lang='quz_Latn'): # -> change it for the language you are fine-tuning...
     """
     Add a new language token to the tokenizer vocabulary and update language mappings.
     """
@@ -40,7 +40,7 @@ def fix_tokenizer(tokenizer, new_lang='quz_Latn'):
     return tokenizer
 
 
-MODEL_URL = "pollitoconpapass/QnIA-translation-model"
+MODEL_URL = "pollitoconpapass/QnIA-translation-model" # -> change for your model name
 model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_URL)
 tokenizer = NllbTokenizer.from_pretrained(MODEL_URL)
 fix_tokenizer(tokenizer)
