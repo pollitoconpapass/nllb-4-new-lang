@@ -2,7 +2,12 @@ import time
 from transformers import NllbTokenizer, AutoModelForSeq2SeqLM
 
 
-def fix_tokenizer(tokenizer, new_lang='quz_Latn'): # -> change it for the language you are fine-tuning...
+# === GENERAL PREVIOUS CONFIGURATION (change to accomodate your needs) ===
+NEW_NLLB_LANG_CODE = 'quz_Latn'
+SRC_NLLB_LANG_CODE = 'spa_Latn'
+FINETUNED_MODEL = "pollitoconpapass/QnIA-translation-model"
+
+def fix_tokenizer(tokenizer, new_lang=NEW_NLLB_LANG_CODE):
     """
     Add a new language token to the tokenizer vocabulary and update language mappings.
     """
@@ -36,12 +41,11 @@ def fix_tokenizer(tokenizer, new_lang='quz_Latn'): # -> change it for the langua
     return tokenizer
 
 
-MODEL_URL = "pollitoconpapass/QnIA-translation-model" # -> change it for your own model name
-model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_URL)
-tokenizer = NllbTokenizer.from_pretrained(MODEL_URL)
+model = AutoModelForSeq2SeqLM.from_pretrained(FINETUNED_MODEL)
+tokenizer = NllbTokenizer.from_pretrained(FINETUNED_MODEL)
 fix_tokenizer(tokenizer)
 
-def translate(text, src_lang='spa_Latn', tgt_lang='quz_Latn', a=32, b=3, max_input_length=1024, num_beams=4, **kwargs): # -> change here as well
+def translate(text, src_lang=SRC_NLLB_LANG_CODE, tgt_lang=NEW_NLLB_LANG_CODE, a=32, b=3, max_input_length=1024, num_beams=4, **kwargs):
     tokenizer.src_lang = src_lang
     tokenizer.tgt_lang = tgt_lang
     inputs = tokenizer(text, return_tensors='pt', padding=True, truncation=True, max_length=max_input_length)
@@ -58,7 +62,7 @@ def translate(text, src_lang='spa_Latn', tgt_lang='quz_Latn', a=32, b=3, max_inp
     return translation
 
 
-# === MAIN === (change to accomadate your needs)
+# === MAIN === (change to accomodate your needs)
 t = '''
 Buenos días, mi nombre es Jose.
 '''
