@@ -4,9 +4,14 @@ from typing import Dict
 from fastapi import FastAPI
 from transformers import NllbTokenizer, AutoModelForSeq2SeqLM
 
+
+# === GENERAL PREVIOUS CONFIGURATION (change to accomodate your needs) ===
+NEW_NLLB_LANG_CODE = 'quz_Latn'
+FINETUNED_MODEL = "pollitoconpapass/QnIA-translation-model"
+
 app = FastAPI()
 
-def fix_tokenizer(tokenizer, new_lang='quz_Latn'): # -> change it for the language you are fine-tuning...
+def fix_tokenizer(tokenizer, new_lang=NEW_NLLB_LANG_CODE):
     """
     Add a new language token to the tokenizer vocabulary and update language mappings.
     """
@@ -40,9 +45,8 @@ def fix_tokenizer(tokenizer, new_lang='quz_Latn'): # -> change it for the langua
     return tokenizer
 
 
-MODEL_URL = "pollitoconpapass/QnIA-translation-model" # -> change for your model name
-model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_URL)
-tokenizer = NllbTokenizer.from_pretrained(MODEL_URL)
+model = AutoModelForSeq2SeqLM.from_pretrained(FINETUNED_MODEL)
+tokenizer = NllbTokenizer.from_pretrained(FINETUNED_MODEL)
 fix_tokenizer(tokenizer)
 
 
